@@ -1,19 +1,4 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-<button bd-logger log="['click', 'dblclick', 'input', 'click']">Button</button>
+<section style="width:980px; padding: 1rem; border-radius: 3px; margin: 1rem auto; background-color: #fff; border: 1px solid rgba(0,0,0,.1)">
+  <div style="width: 200px; height: 100px; background-color: yellow; border: 1px solid rgba(0,0,0,.1)" bd-logger [log]="['click']"></div>
+  <bd-test (count)="test($event)" bd-logger [log]="['click', 'count']"></bd-test>
+</section>

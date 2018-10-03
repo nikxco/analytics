@@ -31,9 +31,11 @@ export class LoggerDirective implements OnInit, OnDestroy {
 
   private _events: any[];
   @Input('log') set log(events: any) {
-    events = events.replace(/'/g, '"');
-    const data = _parseJSON(events);
-    this._events = data ? data : [];
+    if (typeof events === 'string') {
+      events = events.replace(/'/g, '"');
+      events = _parseJSON(events);
+    }
+    this._events = events ? events : [];
   }
 
   get events(): any[] {
@@ -49,13 +51,23 @@ export class LoggerDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.events.forEach(event => {
-      this.eventReference = this.renderer.listen(this.element, event, () => {
+      event = event.toString().trim();
+      if (this.eventReference[event]) {
+        this.eventReference[event]();
+      }
+      if (event.length > 0) {
         console.log(event);
-      });
+        this.eventReference[event] = this.renderer.listen(this.element, event, (e) => {
+          console.log(event);
+        });
+      } else {
+        console.warn('Skipping event handler');
+      }
     });
   }
 
   ngOnDestroy(): void {
+    console.log('Destroyed');
     this.eventReference.forEach(unbind => unbind());
   }
 
