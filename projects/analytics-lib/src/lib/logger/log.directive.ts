@@ -51,17 +51,20 @@ export class LoggerDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.events.forEach(event => {
+      if(!event){
+        console.warn('Skipping event handler:', event);
+        return;
+      }
       event = event.toString().trim();
       if (this.eventReference[event]) {
         this.eventReference[event]();
       }
       if (event.length > 0) {
-        console.log(event);
         this.eventReference[event] = this.renderer.listen(this.element, event, (e) => {
           console.log(event);
         });
       } else {
-        console.warn('Skipping event handler');
+//        console.warn('Skipping event handler:', event);
       }
     });
   }
